@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhnwhjsuvj8ao"]
+
+[ext_resource type="Script" uid="uid://doafgydp8ue1i" path="res://scripts/game_piece.gd" id="1_7gqpf"]
+[ext_resource type="Texture2D" uid="uid://bjgwvwuwgbhpg" path="res://assets/kenney_tinyDungeon/Tiles/tile_0087.png" id="1_pt83b"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7gqpf")
+type = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pt83b")
+centered = false
