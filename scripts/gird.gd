@@ -28,7 +28,6 @@ var pieces={}
 var cols:int=9 # 列
 var rows:int=9 # 行
 
-#caocaocao
 
 # 预加载背景单元格场景
 var back_cell=preload("res://scenes/background.tscn")
