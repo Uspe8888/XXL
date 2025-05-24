@@ -23,9 +23,13 @@ class_name gird
 var piece_dict:Dictionary={}
 var pieces={}
 
+
 # 定义网格的列数和行数
 var cols:int=9 # 列
 var rows:int=9 # 行
+
+
+#操操操操操操操操操操操操操
 
 # 预加载背景单元格场景
 var back_cell=preload("res://scenes/background.tscn")
