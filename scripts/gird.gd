@@ -19,8 +19,6 @@ class_name gird
 # 背景节点，用于存储网格背景
 @onready var back_ground=$back_ground
 
-
-
 # 棋子字典，用于存储棋子实例
 var piece_dict:Dictionary={}
 var pieces={}
