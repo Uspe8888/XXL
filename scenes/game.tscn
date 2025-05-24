@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://c80e4wroqc68x"]
+[gd_scene load_steps=5 format=4 uid="uid://c80e4wroqc68x"]
 
 [ext_resource type="Script" uid="uid://gaog683dp3hx" path="res://scripts/gird.gd" id="1_lbhrr"]
-[ext_resource type="Texture2D" uid="uid://byac65uljn735" path="res://icon.svg" id="2_yqjtg"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yqjtg"]
 load_path = "res://.godot/imported/tilemap.png-e4de6351362f9bc2625e753acc10db8e.ctex"
@@ -159,7 +158,3 @@ position = Vector2(-79, -77)
 script = ExtResource("1_lbhrr")
 
 [node name="back_ground" type="Node2D" parent="chess"]
-
-[node name="Sprite2D" type="Sprite2D" parent="chess/back_ground"]
-position = Vector2(-51, 172)
-texture = ExtResource("2_yqjtg")
