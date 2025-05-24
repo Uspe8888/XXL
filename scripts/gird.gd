@@ -19,7 +19,7 @@ class_name gird
 # 背景节点，用于存储网格背景
 @onready var back_ground=$back_ground
 
-var Piece_type=load("res://scripts/piece_type.gd") # 导入棋子类型脚本
+
 
 # 棋子字典，用于存储棋子实例
 var piece_dict:Dictionary={}
