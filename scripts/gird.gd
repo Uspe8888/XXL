@@ -44,42 +44,31 @@ func _ready() -> void:
 	for x in cols:
 		for y in rows:
 			spawn_chess(x, y, Piece_type.piece_type.empty)
+			
+			
+	
 
 # 每帧调用的函数（当前未使用）
 func _process(delta: float) -> void:
 	pass
+	
+	
 
 # 处理输入事件
 func _input(event: InputEvent) -> void:
 	# 如果按下自定义动作 "my_action"，将棋子移动到指定位置
 	if event.is_action_pressed("my_action"):
-		pieces[Vector2(5,5)].move(Vector2(6,5))
+		pieces[Vector2(5,5)].move(pieces[Vector2(6,5)])
 		
 	# 如果按下 "fill" 动作，执行棋子下落逻辑
 	if event.is_action_pressed("fill"):
-		# 从倒数第二行开始向上遍历每一行
-		for y in range(rows-2, -1, -1):
-			for x in range(cols):
-				var piece=pieces[Vector2(x, y)] # 当前棋子
-				var piece_below=pieces[Vector2(x, y+1)] # 下方棋子
-				# 如果下方棋子为空，则将当前棋子移动到下方
-				if piece_below.type == Piece_type.piece_type.empty:
-					var piece_below_position:Vector2 = piece_below.position
-					piece_below.queue_free() # 删除下方空棋子
-					piece.move(piece_below_position) # 移动当前棋子
-					pieces[Vector2(x, y+1)] = piece # 更新棋子位置
-					spawn_chess(x, y, Piece_type.piece_type.empty) # 在原位置生成空棋子
-					
-		# 在顶部生成随机棋子
-		for x in cols:
-			var gae_piece=pieces[Vector2(x, 0)]
-			var piece_position=gae_piece.position
-			if gae_piece.type == Piece_type.piece_type.empty:
-				gae_piece.queue_free() # 删除顶部空棋子
-				var new_piece= spawn_chess(x, -1, Piece_type.piece_type.random) # 生成随机棋子
-				new_piece.move(piece_position)
-				pieces[Vector2(x, 0)] = new_piece # 更新棋子位置
-				
+		while true:
+			if not await fill():
+				break # 如果没有棋子可以下落，则退出循环
+			await get_tree().create_timer(0.11).timeout	
+		
+	if event.is_action_pressed("step_fill"):
+		fill()
 
 # 初始化网格背景
 func initialize_board() -> void:	
@@ -95,8 +84,8 @@ func initialize_board() -> void:
 
 # 生成棋子
 func spawn_chess(x:int, y:int, piece_type: Piece_type.piece_type=Piece_type.piece_type.random):
-	var cell
 	
+	var cell:Node2D	
 	# 如果类型为随机，则从非空棋子中随机选择
 	if piece_type == Piece_type.piece_type.random:
 		var non_empty_scenes = piece_scenes.slice(1, piece_scenes.size())
@@ -115,3 +104,33 @@ func spawn_chess(x:int, y:int, piece_type: Piece_type.piece_type=Piece_type.piec
 func get_world_position(x, y) -> Vector2:
 	return Vector2(x * (cell_size.x + grid_gap.x), 
 			y * (cell_size.y + grid_gap.y))
+
+	
+func fill ()->bool:
+	var move_piece:bool=false
+	# 从倒数第二行开始向上遍历每一行
+	for y in range(rows-2, -1, -1):
+		for x in range(cols):
+			var piece=pieces[Vector2(x, y)] # 当前棋子
+			var piece_below=pieces[Vector2(x, y+1)] # 下方棋子
+			# 如果下方棋子为空，则将当前棋子移动到下方
+			if piece_below.type == Piece_type.piece_type.empty:
+				#var piece_below_position:Vector2 = piece_below.position
+				piece_below.queue_free() # 删除下方空棋子
+				piece.move(piece_below) # 移动当前棋子
+				pieces[Vector2(x, y+1)] = piece # 更新棋子位置
+				spawn_chess(x, y, Piece_type.piece_type.empty) # 在原位置生成空棋子
+				move_piece=true
+
+	# 在顶部生成随机棋子
+	for x in cols:
+		var gae_piece=pieces[Vector2(x, 0)]
+		#var piece_position=gae_piece.position
+		if gae_piece.type == Piece_type.piece_type.empty:
+			gae_piece.queue_free() # 删除顶部空棋子
+			var new_piece= spawn_chess(x, -1, Piece_type.piece_type.random) # 生成随机棋子
+			new_piece.move(gae_piece)
+			pieces[Vector2(x, 0)] = new_piece # 更新棋子位置
+			move_piece=true
+	
+	return move_piece

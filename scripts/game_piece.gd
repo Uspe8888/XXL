@@ -18,7 +18,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func move(target:Vector2):
-	var end_pos:Vector2=target
+func move(target:Node2D):
+	var end_pos=target
 	var tween := create_tween()
-	tween.tween_property(self, "position", end_pos, 0.2)
+	tween.tween_property(self, "position", end_pos.position, 0.1)
