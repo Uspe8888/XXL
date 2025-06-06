@@ -156,5 +156,6 @@ tile_set = SubResource("TileSet_lnu2h")
 [node name="chess" type="Node2D" parent="."]
 position = Vector2(-79, -77)
 script = ExtResource("1_lbhrr")
+active_pieces_count = 6
 
 [node name="back_ground" type="Node2D" parent="chess"]
